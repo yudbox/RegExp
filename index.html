@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Regexp</title>
+</head>
+
+<body>
+    <script>
+
+        // регулярные выражения можно создавать двумя способами с помощью конструктора  new и с помошью /тут шаблон/тут флаги
+        // const regexp = new RegExp('тут шаблон', 'тут флаги')
+
+        // const regexp = /зовут!/
+        // const regexp = /\d\d/
+        // const regexp = /\D\D/
+        // const regexp = /\d\d\s/     //-- два числа после которых идет пробел
+        // const regexp = /\d\d\S/     //-- два числа после которых идет не пробел
+        // const regexp = /\w\w\S/     //-- два числа после которых идет не пробел
+        // const str = 'Привет всем меня зовут Alex. Тебе 20? Мне 25 лет.'
+
+
+        // НАБОРЫ
+
+        // const regexp = /[^ИЮ]ра/ 
+
+        // ДИАПАЗОНЫ
+
+        // const regexp = /[и-нп][к-пи-н]/ 
+        // const str = 'Юра и Ира сказали Ура!'
+        // result = str.match(regexp) 
+
+        // console.log(result)
+
+
+        //КВАТНИФИКАТОРЫ ЖАДНЫЕ И ЛЕНИВЫЕ
+
+        // const regexp = /\d{2}\.\d{2}\.\d{4}/ 
+        // const str = 'Сегодня 23.08.2020 число'
+
+        // const regexp = /\d{3,4}/
+        // const regexp = /\d{3,4}?/ 
+        // const regexp = /\d{3,}/ 
+        // const regexp = /\d{2,},/ 
+        // const str = 'У меня только 50, не хватает еще "10000" грн'
+        // result = str.match(regexp) 
+
+        // console.log(result)
+
+        // const regexp = /colou?r/
+        // const str = 'What colour is the cat?'
+
+        // const regexp = /.*?"/
+        // const regexp = /\d*/
+        // const regexp = /\d*?/
+        // const regexp = /\d+/
+        // const regexp = /\d+?/
+        // const str = '2563541236578'
+        // result = str.match(regexp) 
+
+        // console.log(result)
+
+
+
+
+        //МЕТОДЫ РЕГУЛЯРНЫХ ВЫРАЖЕНИЙ
+        //1. str.match(regexp)  - ищет соврадения в строке
+
+        // const result = str.match(regexp)
+
+        //2. str.split(regexp)  - ищет сепараторы и убирает их, в нашем случае сепаратор '   ,    ' пробел-запятая-пробел, 
+        //и затем элементы строк превращает в массив
+
+        // const regexp = /\s*,\s*/
+        // const str = '1, 2   ,3, 4   ,   5   ,6,7,8'
+        // const result = str.split(regexp)
+
+        //3. str.search(regexp) - ищет позицию в тексте искомой подстроки,если ее нет выведет -1
+
+
+        // const regexp = /\d{6}/
+        // const str = 'my phone number is 465461. And email...'
+        // const result = str.search(regexp)
+
+        // const regexp = /./g
+        // const str = 'a\nb'
+
+        // const regexp = /./gs
+        // const str = 'a\nb'
+
+        // const regexp = /кот/g
+        // const str = 'Кот терракотового цвета кушает котлету.'
+
+        // const regexp = /кот/gi
+        // const str = 'Кот терракотового цвета кушает котлету.'
+
+        // result = str.match(regexp) 
+        // console.log(result)
+
+        // 4. matchAll 
+        // const result = str.matchAll(regexp)    // работает не во всех браузерах
+
+
+        // 5. Метод regexp.exec(str)    наоборот вызывается у регулярного выражени и применяет
+        //  regexp к строке столько раз пока не вернет null, но нужно выхывать много раз,
+        //  хорошо работает через цикл while
+
+
+        // const regexp = /кот/gi
+        // const str = 'Кот терракотового цвета кушает котлету.'
+
+        // console.log('lastIndex', regexp.lastIndex)   // lastIndex есть только у выражений с флагом g -global
+
+        // let result = regexp.exec(str)
+        // console.log('result', result, 'lastIndex', regexp.lastIndex) 
+
+        // result = regexp.exec(str)
+        // console.log('result', result, 'lastIndex', regexp.lastIndex)
+
+        // result = regexp.exec(str)
+        // console.log('result', result, 'lastIndex', regexp.lastIndex) 
+
+        // result = regexp.exec(str)
+        // console.log('result', result, 'lastIndex', regexp.lastIndex) 
+
+
+        // let result = []
+        // let currentResult = null;
+        // while (currentResult = regexp.exec(str)) {
+        //     result = [...result, currentResult]
+        // }
+        // console.log(result)
+
+
+        // let str = ''
+        // for (let i = 0; i < 1000000; i++) {
+        //     str += (i === 1000 || i === 2000) ? 'b' : 'a'
+        // }
+        
+        // // пробегает по всей строке ищет совпадения 3 раза
+        // let regexp = /b/g
+        // let t1 = performance.now();
+        // let result1 = regexp.exec(str)
+        // let result2 = regexp.exec(str)
+        // let result3 = regexp.exec(str)
+        // let t2 = performance.now();
+        // console.log(t2 -t1, result1, result2, result3)
+
+        // пробегает только по 0-му 1-му и 2-му индексу строки, совпадений не находит выводит 3 раза null
+        // regexp = /b/y
+        // t1 = performance.now();
+        // result1 = regexp.exec(str)
+        // result2 = regexp.exec(str)
+        // result3 = regexp.exec(str)
+        // t2 = performance.now();
+        // console.log(t2 -t1, result1, result2, result3)
+
+        // начинае поиск с 1000-го индеска, затем с 2000-го и продолжает искать от 2001-го до конца
+        // regexp = /b/g
+        // t1 = performance.now();
+        // regexp.lastIndex = 1000
+        // result1 = regexp.exec(str)
+        // regexp.lastIndex = 2000
+        // result2 = regexp.exec(str)
+        // result3 = regexp.exec(str)
+        // t2 = performance.now();
+        // console.log(t2 -t1, result1, result2, result3)
+
+        // если заранее указать где искать то в lastIndex указываем индекс и выражение ищется
+        // на 1000-й позиции, на 2000-й позиции и на 2001-й и все, так сказать точечный поиск
+        // regexp = /b/y
+        // t1 = performance.now();
+        // regexp.lastIndex = 1000
+        // result1 = regexp.exec(str)
+        // regexp.lastIndex = 2000
+        // result2 = regexp.exec(str)
+        // result3 = regexp.exec(str)
+        // t2 = performance.now();
+        // console.log(t2 -t1, result1, result2, result3)
+
+        // 6. Юникодные свойства \p{Sc}
+
+        // const regexp = /\p{Sc}/gu
+        // const str = '10$ это₽ 600 и 300₴.'
+
+        // const regexp = /\p{Sc}/gum
+        // const str = '10$ это₽ 600 и 300₴.'
+
+        // const result = str.match(regexp)
+        // console.log(result)
+
+
+        // const regexp = /^[^\s]+/g
+        // const regexp = /[^\s]+$/g
+        // const regexp = /[^\s]+$/gm    // ищет совпадения в конце каждой строки
+        // const regexp = /^[^\s]+/gm
+        // const str = 'Я вас любил: любовь еще, быть может,\nВ душе моей угасла не совсем;\nНо пусть она вас больше не тревожит;\nЯ не хочу печалить вас ничем.\nЯ вас любил безмолвно, безнадежно,\nТо робостью, то ревностью томим;\nЯ вас любил так искренно, так нежно,\nКак дай вам бог любимой быть другим.'
+
+        // const regexp =/am/g
+        // const regexp =/\sam\s/g
+        // const regexp =/\bam\b/g
+        // const regexp =/\Bam\B/g
+        // const str = 'Hello I am a good progtammer... Yes, I am...'
+
+        // let result = str.match(regexp)
+        // console.log(result)
+
+
+        // 7. Медод regexp.test(str) ищет совпадения регулярного выражения в строке true/false
+
+        // const regexp = /[a-f\d]{2}[-:][a-f\d]{2}[-:][a-f\d]{2}[-:][a-f\d]{2}[-:][a-f\d]{2}[-:][a-f\d]{2}/gi
+        // const regexp = /([a-f\d]{2}[-:]){5}[a-f\d]{2}/gi  // поместили повторяющийся участок ([a-f\d]{2}[-:]){5} в скобочную группу и повторили 5 раз. В результате вывелся последний результат скобочной группы
+        // const regexp = /(?:[a-f\d]{2}[-:]){5}[a-f\d]{2}/gi  
+        // const regexp = /[a-f\d]{2}([-:])(?:[a-f\d]{2}[-:]){4}[a-f\d]{2}/gi  
+        // const regexp = /[a-f\d]{2}([-:])(?:[a-f\d]{2}\1){4}[a-f\d]{2}/gi  
+        // const regexp = /[a-f\d]{2}(?<dashsemi>[-:])(?:[a-f\d]{2}\k<dashsemi>){4}[a-f\d]{2}/gi  
+
+        // const str = `
+        //     ARP-таблица:
+        //     Физичеккий адрес   IP-адрес
+        //     03-60-8C-01-02-03  197.17.13.3
+        //     00:60:A2:01:05:89  197.17.13.44
+        //     AA-00-22-6A:92:89  197.17.13.123
+        //     03-AE-8C-90-90-90  197.17.13.4
+        //     08:BC:AC:90:90:90  197.17.13.67
+        // `
+        // let result = str.match(regexp)
+        // // const result = Array.from(str.matchAll(regexp))
+        // console.log(result)
+
+
+        // 8. Медод str.replace(regexp, "string") этот метод находит совпадение и заменяет его на строку
+        
+        // const regexp = /(\w+)\s(\w+)/
+        // const regexp = /(?<firstName>\w+)\s(?<lastName>\w+)/
+        // const str = ' Привет меня язовут Vasya Pupkin. А тебя?'
+
+        // const result = str.replace(regexp, "Коля Чадин")
+        // const result = str.replace(regexp, "$&")      // $& - вставит на замену само совпадение
+        // const result = str.replace(regexp, "$`")      // $` - вставит на замену всю часть строки которая была до совпадения
+        // const result = str.replace(regexp, "$'")      // $' - вставит на замену всю часть строки которая была после совпадения
+        // const result = str.replace(regexp, "$$")      // $$ - вставит сам знак $ если надо
+        // const result = str.replace(regexp, "$2 $1")   // $1 и $2 - вставит на замену результат певой и второй скобочной группы
+        // const result = str.replace(regexp, "$<lastName> $<firstName>")  // <lastName> и <firstName> - вставит на замену результат именной скобочной группы
+
+        // вторым параметром можно вставить функцию которая принимает match - результат совпадения, p1-10 - результат скобочной группы,
+        // если их будет10, то будет p10, offset - индекс на котором совпало, str - сама строка, groups - массив скобочных груп
+        // обязательно нужно вернуть строку для замены return 'some text'
+        //     const result = str.replace(regexp, (match, p1, p2, offset, str, groups) => {
+        //         console.log('match',match)
+        //         console.log('p1',p1)
+        //         console.log('p2',p2)
+        //         console.log('offset',offset)
+        //         console.log('str',str)
+        //         console.log('groups',groups)
+        //         return `${p2} ${p1}` 
+        //     })
+
+        // console.log(result)
+
+        // 9. Альтернация выражений т.е. выбор или
+
+        // const regexp = /b|d/g
+        // const str = 'skdjhfkfbsdhfdb'
+
+        // const regexp = /(?:[01]\d|2[0-3]):[0-5]\d/g
+        // const str = 'Завтрак в 09:15. Обед в 15:45. Ужин в 21:20.'
+
+        // const regexp = /\d+\b(?=\sгривень)/g
+        // const str = 'Ваш заказ 33 прибыл, с вас 225 гривень... Ват вша сдача 35 гривень' 
+
+        // const regexp = /\d+\b(?!\sгривень)/g
+        // const str = 'Ваш заказ 33 прибыл, с вас 225 гривень... Ват вша сдача 35 гривень' 
+
+        // const regexp = /(?<=заказ\s)\b\d+/g
+        // const str = 'Ваш заказ 33 прибыл, с вас 225 гривень... Ват вша сдача 35 гривень' 
+
+        // const regexp = /(?<!заказ\s)\b\d+/g
+        // const str = 'Ваш заказ 33 прибыл, с вас 225 гривень... Ват вша сдача 35 гривень' 
+
+        // const result = str.match(regexp)
+        // console.log(result)
+
+
+        // const regexp = /[a-zA-Z\d]/g
+        // const regexp = /(?=[a-z])[a-zA-Z\d]/g
+        // const regexp = /(?=[a-z])(?=[a-z]*?[A-Z])[a-zA-Z\d]/g
+        // const regexp = /(?=[A-Z\d]*?[a-z])(?=[a-z\d]*?[A-Z])(?=[a-zA-Z]*?\d)[a-zA-Z\d]{3}/g
+
+        // const str = `
+        // a B
+        // aa aB Ba BB
+        // 1aa a1a aa1
+        // 1aB a1B aB1
+        // 1BB B1B BB
+        // `
+
+        // const result = str.match(regexp)
+        // console.log(result)
+
+
+
+
+        // . (точка) - означает любой символ кроме \n - кроме переноса строки
+        // \d - означает любое число от 0 до 9 -- символьный клас
+        // \D - означает любой символ кроме чисел -- символьный клас
+        // \s - означает пробельный символ, т.е. пробел, табуляция или перенос строки -- символьный клас
+        // \S - означает не пробельный символ, т.е. все что не пробел, табуляция или перенос строки -- символьный клас
+        // \w - означает один символ слова который явяется либо латинской буквой, либо числом, либо_ [a-z,A-Z,0-9,_]
+        // \W - означает один символ не слова все что не попадает под символ w (русские буквы тоже неслово)
+        // \W - означает один символ не слова все что не попадает под символ w (русские буквы тоже неслово)
+        // [abc] or [АБВ] - если набор из букв a b or c, А Б или В есть в строке выведет первое совпадение
+        // [^abc] or [^АБВ] - исключает из поиска буквы a b or c, А Б или В и выведет первое совпадение других букв
+        // [d-gr-y] of [м-пт-щё] - будет искать в строке все буквы из диапазона defg rstuqy
+        // [^d-gr-y] of [^м-пт-щё] - наоборот не будет искать в строке буквы из диапазона 
+
+        // жадные квантификаторы пытаются повторить найбольшее количество раз
+        // {n} - повторяются n раз
+        // {m,n} - повторить от m до n раз
+        // {m,} - повторить от m до бесконечности раз
+        // ? - повторяет символ от 0 до 1 раз, т.е. в colou?r u повторится или 0 раз или 1 
+        // * - повторит символьный класс от 0 до бесконечности, т.е. захватит всю строку 
+        // + - повторит символьный класс от 1 до бесконечности
+
+
+        // Ленивые стараются повторить найменьшее количество раз
+        // {m,n}? - повторит до m раз
+        // {m,}? - повторит до m раз
+        // ?? - повторит от 0 до 0 т.е. нисколько раз
+        // *? - посторит 0 раз, ленивый сука, выведет пустую строку
+        // +? - поворит от 1 до 1 раз, т.е. выполнит 1 раз
+
+        // флаги
+        // g - глобальный поиск, ищет по всей строке и  находит все совпадения
+        // s - включает специальный режим при котором . включает все символы, даже символ переноса строки \n
+        // i - регистр игнорируетя, т.е. ищет в обоих регистрах
+        // y - для поиска на заданной позиции lastIndex
+        // u - включает поддержку юникода и юникодных свойств через /\p{Sc}/, поддерживается не во всех браузерах
+        // m - означает многоcтрочный поиск, если в строке(тексте) есть много строк созданных с помощью \n
+
+        // якоря
+        // ^ - означает начало текста, если есть флаг \m то он означает начало строки
+        // $ - означает конец текста, если есть флаг \m то он означает конец строки
+        // \b - означает искать по границе слова(т.е  слова целиком латинскими буквами, криллица словом не считается). Границами слова являются: 1) ^ и \w - между началом текста и словом 2) \w и \W - между словом и не словом  3) \W и \w - между не словом и словом  4) \w и $ - между словом и концом текста
+        // \B - означает поис не по границе слова(т.е. совпадение внутри слова как буквы)
+
+        // скобочные группы
+        // () - скобочные группы это выражения требующие повторения, с результатом одной скобочной группы
+        // ?: - исключает из общего результата результат одной скобочной группы
+        // \1 - ссылка на скобочную группу ([-:]) - первая скобочная группа (?:[a-f\d]{2}\1)- вторая скобочная группа, а \1 - это сыылка на результат певой группы который будет динамически подставлять либо - (тире), либо : (двоеточие)
+        // ?<name> - можно дать имя скобочной группе (именнованная скобочная группа)
+        // k<name> - ссылка на скобочную группу по имени вместо \1
+
+        // | - или - альтернация
+        // X(?=Y) - позитивная опережающая проверка, это когда ищется Х(это наше регулярное выражение) только за которым идет Y (это пробел и слово гривень)
+        // X(?!Y) - негативная опережающая проверка, это когда ищется Х(это наше регулярное выражение) только за которым не идет Y (т.е. число за которым нет пробел гривень)
+        // (?<=Y)X  - позитивная ретроспективная проверка, это когда ищется Х(это наше регулярное выражение) ПЕРЕД которым идет Y (т.е. число перед которым идет слово "заказать" с пробелом)
+        // (?<!Y)X - негативная ретроспективная проверка, это когда ищется Х(это наше регулярное выражение) ПЕРЕД которым НЕ идет Y (т.е. число перед которым нет слова "заказать" с пробелом)
+
+
+
+    </script>
+</body>
+
+</html>
